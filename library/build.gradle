@@ -1,7 +1,10 @@
 //文件开头配置
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'kotlin-android'
+
+group='com.hjq.toast'
+version="9.0.7"
 
 android {
     compileSdkVersion 26
@@ -11,8 +14,8 @@ android {
     defaultConfig {
         minSdkVersion 3
         targetSdkVersion 26
-        versionCode 80
-        versionName "8.0"
+        versionCode 90007
+        versionName "9.0.7"
     }
     lintOptions.abortOnError = false
     buildTypes {
@@ -52,17 +55,18 @@ task sourcesJar(type: Jar) {
     classifier = 'sources'
 }
 
-//task javadoc(type: Javadoc) {
-//    source = android.sourceSets.main.java.srcDirs
-//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-//}
-//
-//task javadocJar(type: Jar, dependsOn: javadoc) {
-//    classifier = 'javadoc'
-//    from javadoc.destinationDir
-//}
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
 
 artifacts {
-//    archives javadocJar
+    archives javadocJar
     archives sourcesJar
 }
